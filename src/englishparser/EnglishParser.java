@@ -31,7 +31,9 @@ import java.io.IOException;
  */
 public class EnglishParser {
 
-    public static ResultSaver printer;
+    public static ResultSaver printer_NP;
+    public static ResultSaver printer_NN;
+    public static ResultSaver printer_NNP;
 
     public static void main(String[] args) throws IOException {
         LexicalizedParser lp = LexicalizedParser.loadModel("edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz");
@@ -44,29 +46,48 @@ public class EnglishParser {
     }
 
     public static void demoDP(LexicalizedParser lp, String filename) throws FileNotFoundException, IOException {
-        printer = new ResultSaver();
+        printer_NP = new ResultSaver("/home/bigstone/Documents/medicine_NP.txt");
+        printer_NN = new ResultSaver("/home/bigstone/Documents/medicine_NN.txt");
+        printer_NNP = new ResultSaver("/home/bigstone/Documents/medicine_NNP.txt");
         TreebankLanguagePack tlp = new PennTreebankLanguagePack();
         GrammaticalStructureFactory gsf = tlp.grammaticalStructureFactory();
 
-        int life = 10;
         for (List<HasWord> sentence : new DocumentPreprocessor(filename)) {
             Tree parse = lp.apply(sentence);
             extractNP(parse);
-            if (life == 0) {
-                break;
-            }
-            life--;
+            extractNN(parse);
+            extractNNP(parse);
         }
 
-        printer.close();
+        printer_NP.close();
     }
 
+    private static void extractNN(Tree t) {
+        for (Tree child : t.children()) {
+            if (isNN(child)) {
+                printer_NN.print(Sentence.listToString(child.yield()));
+                continue;
+            }
+            extractNN(child);
+        }
+    }
+
+    private static void extractNNP(Tree t) {
+        for (Tree child : t.children()) {
+            if (isNNP(child)) {
+                printer_NNP.print(Sentence.listToString(child.yield()));
+                continue;
+            }
+            extractNNP(child);
+        }
+    }
+    
     private static void extractNP(Tree t) {
         for (Tree child : t.children()) {
-            if (isNoun(child)) {
+            if (isNP(child)) {
                 if (isLowestNoun(child) == true) {
 //                    System.out.println(Sentence.listToString(child.yield()));
-                    printer.print(Sentence.listToString(child.yield()));
+                    printer_NP.print(Sentence.listToString(child.yield()));
                     continue;
                 }
             }
@@ -83,14 +104,24 @@ public class EnglishParser {
         }
     }
 
-    private static boolean isNoun(Tree t) {
+    private static boolean isNP(Tree t) {
 //        return t.label().value().equals("NNS") || t.label().value().equals("NP") || t.label().value().equals("NN");
         return t.label().value().equals("NP");
     }
 
+    private static boolean isNN(Tree t) {
+//        return t.label().value().equals("NNS") || t.label().value().equals("NP") || t.label().value().equals("NN");
+        return t.label().value().equals("NN") || t.label().value().equals("NNS");
+    }
+
+    private static boolean isNNP(Tree t) {
+//        return t.label().value().equals("NNS") || t.label().value().equals("NP") || t.label().value().equals("NN");
+        return t.label().value().equals("NNP");
+    }
+
     private static boolean isLowestNoun(Tree t) {
         for (Tree child : t.children()) {
-            if (isNoun(child)) {
+            if (isNP(child)) {
                 return false;
             }
             if (isLowestNoun(child) == false) {

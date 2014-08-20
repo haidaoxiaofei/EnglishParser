@@ -17,10 +17,10 @@ import java.util.logging.Logger;
  * @author bigstone
  */
 public class ResultSaver implements printer {
-    private String filePath = "/home/bigstone/Documents/data_taxonomy/medicine_NP.txt";
+//    private String filePath = "/home/bigstone/Documents/medicine_NP.txt";
     FileWriter fw = null;
     private static int count = 0;
-    public ResultSaver(){
+    public ResultSaver( String filePath){
         try {
 //            File f = new File(filePath);
 //            f.createNewFile();
@@ -36,7 +36,8 @@ public class ResultSaver implements printer {
         try {
             fw.write(content);
             fw.write("\n");
-            if(count % 100 == 0) {
+            if(count % 1000 == 0) {
+                System.out.println(count/1000);
                 fw.flush();
             }
         } catch (IOException ex) {
