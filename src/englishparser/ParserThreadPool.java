@@ -28,7 +28,7 @@ public class ParserThreadPool {
         ParserTask.init();
         ThreadPool tPool = new ThreadPool(5, 50);
         
-        String filename = "/home/bigstone/Documents/data_taxonomy/lang_tag.txt";
+        String filename = "/home/bigstone/Documents/computer.txt";
         
         int life = 100;
         for (List<HasWord> sentence : new DocumentPreprocessor(filename)) {

@@ -38,7 +38,7 @@ public class EnglishParser {
     public static void main(String[] args) throws IOException {
         LexicalizedParser lp = LexicalizedParser.loadModel("edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz");
 
-            demoDP(lp, "/home/bigstone/Documents/data_taxonomy/lang_tag.txt");
+            demoDP(lp, "/home/bigstone/Documents/computer.txt");
       
     }
 
