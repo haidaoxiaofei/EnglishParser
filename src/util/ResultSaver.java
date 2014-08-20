@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package englishparser;
+package util;
 
-import java.io.File;
+import englishparser.printer;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -22,8 +22,6 @@ public class ResultSaver implements printer {
     private static int count = 0;
     public ResultSaver( String filePath){
         try {
-//            File f = new File(filePath);
-//            f.createNewFile();
             fw = new FileWriter(filePath);
         } catch (IOException ex) {
             Logger.getLogger(ResultSaver.class.getName()).log(Level.SEVERE, null, ex);

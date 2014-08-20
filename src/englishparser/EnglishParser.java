@@ -5,7 +5,7 @@
  */
 package englishparser;
 
-import java.util.Collection;
+import util.ResultSaver;
 import java.util.List;
 import java.io.StringReader;
 
@@ -19,10 +19,7 @@ import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.ling.Sentence;
 import edu.stanford.nlp.trees.*;
 import edu.stanford.nlp.parser.lexparser.LexicalizedParser;
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 
 /**
