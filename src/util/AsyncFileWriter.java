@@ -14,7 +14,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class AsyncFileWriter implements MyFileWriter, Runnable {
+public class AsyncFileWriter implements MyFileWriter, Runnable, Printer {
 
     private final File file;
     private final Writer out;
@@ -25,6 +25,7 @@ public class AsyncFileWriter implements MyFileWriter, Runnable {
     public AsyncFileWriter(File file) throws IOException {
         this.file = file;
         this.out = new BufferedWriter(new FileWriter(file));
+        this.open();
     }
 
     public MyFileWriter append(CharSequence seq) {
@@ -57,10 +58,12 @@ public class AsyncFileWriter implements MyFileWriter, Runnable {
     public void run() {
         while (!stopped) {
             try {
+//                System.out.println("running...");
                 Item item = queue.poll(500, TimeUnit.MICROSECONDS);
                 if (item != null) {
                     try {
                         item.write(out);
+                        
                     } catch (IOException logme) {
                     }
                 }
@@ -77,6 +80,11 @@ public class AsyncFileWriter implements MyFileWriter, Runnable {
         this.stopped = true;
     }
 
+    @Override
+    public void print(String content) {
+        this.append(content);
+    }
+
     private static interface Item {
 
         void write(Writer out) throws IOException;
@@ -91,7 +99,7 @@ public class AsyncFileWriter implements MyFileWriter, Runnable {
         }
 
         public void write(Writer out) throws IOException {
-            out.append(sequence);
+            out.append(sequence + "\n");
         }
     }
 

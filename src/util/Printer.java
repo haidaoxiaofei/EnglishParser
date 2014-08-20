@@ -4,12 +4,13 @@
  * and open the template in the editor.
  */
 
-package englishparser;
+package util;
 
 /**
  *
  * @author bigstone
  */
-public interface printer {
+public interface Printer {
     public void print(String content);
+    public void close();
 }

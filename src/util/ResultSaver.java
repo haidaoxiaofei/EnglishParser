@@ -6,7 +6,6 @@
 
 package util;
 
-import englishparser.printer;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -16,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author bigstone
  */
-public class ResultSaver implements printer {
+public class ResultSaver implements Printer {
 //    private String filePath = "/home/bigstone/Documents/medicine_NP.txt";
     FileWriter fw = null;
     private static int count = 0;
