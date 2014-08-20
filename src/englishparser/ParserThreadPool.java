@@ -40,10 +40,12 @@ public class ParserThreadPool {
             life--;
         }
         
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ParserThreadPool.class.getName()).log(Level.SEVERE, null, ex);
+        while(!tPool.isTaskFinished()){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ParserThreadPool.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         tPool.stop();
