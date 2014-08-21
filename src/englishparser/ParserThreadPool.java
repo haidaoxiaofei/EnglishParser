@@ -26,18 +26,12 @@ public class ParserThreadPool {
         TreebankLanguagePack tlp = new PennTreebankLanguagePack();
         GrammaticalStructureFactory gsf = tlp.grammaticalStructureFactory();
         ParserTask.init();
-        ThreadPool tPool = new ThreadPool(5, 50);
+        ThreadPool tPool = new ThreadPool(25, 50);
         
-        String filename = "/home/bigstone/Documents/computer.txt";
+        String filename = "/home/bigstone/Documents/medicine1.txt";
         
-        int life = 100;
         for (List<HasWord> sentence : new DocumentPreprocessor(filename)) {
             tPool.excute(new ParserTask(sentence));
-            
-            if(life <= 0){
-                break;
-            }
-            life--;
         }
         
         while(!tPool.isTaskFinished()){

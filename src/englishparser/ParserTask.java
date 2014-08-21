@@ -9,9 +9,6 @@ import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.ling.Sentence;
 import edu.stanford.nlp.parser.lexparser.LexicalizedParser;
 import edu.stanford.nlp.trees.Tree;
-import static englishparser.EnglishParser.printer_NN;
-import static englishparser.EnglishParser.printer_NNP;
-import static englishparser.EnglishParser.printer_NP;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -35,9 +32,9 @@ public class ParserTask extends Thread {
 
     public static void init() {
         try {
-            printer_NP = new AsyncFileWriter(new File("/home/bigstone/Documents/medicine_NP.txt"));
-            printer_NN = new AsyncFileWriter(new File("/home/bigstone/Documents/medicine_NN.txt"));
-            printer_NNP = new AsyncFileWriter(new File("/home/bigstone/Documents/medicine_NNP.txt"));
+            printer_NP = new AsyncFileWriter(new File("/home/bigstone/Documents/medicine_NP1.txt"));
+            printer_NN = new AsyncFileWriter(new File("/home/bigstone/Documents/medicine_NN1.txt"));
+            printer_NNP = new AsyncFileWriter(new File("/home/bigstone/Documents/medicine_NNP1.txt"));
         } catch (IOException ex) {
             Logger.getLogger(ParserTask.class.getName()).log(Level.SEVERE, null, ex);
         }
