@@ -43,6 +43,7 @@ public class PostProcess {
         br = null;
         fis = null;
         
+        List<String> wordsList = new ArrayList();
         
         fis = new FileInputStream(filePath);
         br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
@@ -57,15 +58,28 @@ public class PostProcess {
                         stayFlag = false;
                         break;
                     }
+                    
+                    if(words[i].startsWith("$") || Character.isDigit(words[i].charAt(0)) || words[i].startsWith("%")){
+                        stayFlag = false;
+                        break;
+                    }
                 }
                 
                 if(stayFlag == true){
-                    fw.write(words[i]);
-                    fw.write(" ");
+                    wordsList.add(words[i]);
                 }
             }
             
-            fw.write("\n");
+            if(wordsList.size() >= 2){
+                for(String s : wordsList){
+                    fw.write(s);
+                    fw.write(" ");
+                }
+                
+                fw.write("\n");
+            }
+            
+            
         }
 
         fw.flush();
